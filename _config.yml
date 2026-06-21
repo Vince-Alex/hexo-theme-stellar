@@ -299,7 +299,7 @@ comments:
   # Twikoo
   # https://twikoo.js.org/
   twikoo:
-    js: https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js # 建议锁定版本
+    js: https://cdn.jsdelivr.net/npm/twikoo@1.7.12/dist/twikoo.min.js # 建议锁定版本
     envId: https://xxx # vercel函数
 
   # Waline
