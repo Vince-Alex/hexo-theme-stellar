@@ -2,7 +2,8 @@
 'use strict';
 
 function themeConfig() {
-  return (hexo.theme && hexo.theme.config && hexo.theme.config.language_switcher) || {};
+  return (hexo.theme && hexo.theme.language_switcher) ||
+    (hexo.theme && hexo.theme.config && hexo.theme.config.language_switcher) || {};
 }
 
 const {

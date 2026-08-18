@@ -20,13 +20,18 @@ tags:
 - [layout/_partial/menubtn.ejs](../../../layout/_partial/menubtn.ejs)
 - [layout/_partial/widgets/toc.ejs](../../../layout/_partial/widgets/toc.ejs)
 - [scripts/helpers/language.js](../../../scripts/helpers/language.js)
+- [scripts/lib/language_path.js](../../../scripts/lib/language_path.js)
+- [layout/_partial/sidebar/language.ejs](../../../layout/_partial/sidebar/language.ejs)
 - [layout/_partial/sidebar/menu.ejs](../../../layout/_partial/sidebar/menu.ejs)
+- [layout/_partial/sidebar/index_leftbar.ejs](../../../layout/_partial/sidebar/index_leftbar.ejs)
 
 </details>
 
 本页介绍 hexo-theme-stellar 的国际化（i18n）基础设施：语言文件格式、可用翻译键、模板如何访问翻译字符串、如何添加新语言。搜索 UI 字符串见[搜索功能](../07-外部集成/search.md)；使用 `page.error.*` 键的错误页见[错误页](../03-内容系统/error-pages.md)。
 
 主题文案国际化与内容多语言是两个不同层次：`languages/*.yml` 只翻译主题提供的界面文案；文章、Wiki 和页面正文通过 URL 的语言前缀自动关联不同语言版本。语言切换器只链接已发布的版本，不会自动翻译正文。
+
+语言切换器由 `layout/_partial/sidebar/language.ejs` 统一渲染，固定显示在左侧栏 footer 中，不占用主菜单。它在首页、文章页和 Wiki 页面均可使用；Wiki 内容页即使按默认行为隐藏主菜单，footer 入口仍会保留。配置覆盖使用方主题配置中的 `language_switcher.items`，页面链接由 `language_versions(page)` 按规范化路径 key 自动匹配。
 
 ---
 

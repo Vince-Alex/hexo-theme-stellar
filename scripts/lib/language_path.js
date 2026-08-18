@@ -9,7 +9,8 @@ function normalizePath(path) {
 
 function configuredLanguages(ctx) {
   ctx = ctx || {};
-  const cfg = (ctx.theme && ctx.theme.config && ctx.theme.config.language_switcher) || {};
+  const cfg = (ctx.theme && ctx.theme.language_switcher) ||
+    (ctx.theme && ctx.theme.config && ctx.theme.config.language_switcher) || {};
   const siteLanguages = Array.isArray(ctx.config && ctx.config.language)
     ? ctx.config.language
     : [ctx.config && ctx.config.language || 'en'];
