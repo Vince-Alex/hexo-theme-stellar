@@ -1,6 +1,6 @@
 ######## Stellar info ########
 stellar:
-  version: '1.42.1'
+  version: '1.44.0'
   homepage: 'https://xaoxuu.com/wiki/stellar/'
   repo: 'https://github.com/xaoxuu/hexo-theme-stellar'
   main_css: /css/main.css
@@ -376,6 +376,18 @@ footer:
     # comments:
     #   icon: '<img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/942ebbf1a4b91.svg"/>'
     #   url: /about/#comments
+    # spacer: # 弹性占位项：将其后的 social 按钮推至右侧
+    # links:
+    #   type: dropdown
+    #   icon: default:documents
+    #   title: 更多链接
+    #   items:
+    #     - icon: default:documents
+    #       title: 文档
+    #       url: /wiki/
+    #     - icon: default:github
+    #       title: GitHub
+    #       url: https://github.com/
   sitemap:
     # - title: 博客
     #   items:
@@ -680,6 +692,12 @@ plugins:
   # 页面存在 [data-text-adaptive] 元素时才按需加载（theme：背景图平均色 lighten/darken；contrast：黑白对比）
   adaptive_text:
     enable: true
+
+  # 卡片鼠标跟随光斑与 3D 倾斜：通过 card-hover 组合类按组件接入
+  card_hover:
+    enable: false
+    spotlight_color: 'rgba(255, 255, 255, 0.25)'
+    max_tilt: 3 # 最大倾斜角度（deg），运行时限制在 0~8
   
   # 赫蹏 (Heti) - 专为中文网页内容设计的排版样式增强
   # https://github.com/sivan/heti
@@ -692,9 +710,10 @@ plugins:
 
 style:
   prefers_theme: auto # auto / light / dark
+  page_transition:
+    enable: true # 同源整页导航使用原生 View Transition；旧浏览器自动回退普通导航
   font-size:
-    root: 16px # 改这个会影响全局所有文字的字号
-    body: 17px # 影响正文区域的字号，如果改成 px 则不受 root 影响
+    root: 16px # 桌面端全局字号基准；移动端自动增加 2px
     code: 85% # 相较于其所在行的文本大小，建议用百分比
     codeblock: 0.8125rem # 13px
   font-family:

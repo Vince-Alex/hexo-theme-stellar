@@ -9,7 +9,8 @@ function layoutWikiCover() {
     return el;
   }
 
-  var background = proj.background;
+  var background = typeof proj.background === 'string' && proj.background.length > 0 ? proj.background : '';
+  var animation = proj.animation && typeof proj.animation === 'object' ? proj.animation : {};
   var preview = proj.preview || {};
   var commands = Array.isArray(preview.commands) ? preview.commands.filter(function (item) {
     return item && item.codes;
@@ -21,53 +22,51 @@ function layoutWikiCover() {
   var actions = Array.isArray(proj.actions) ? proj.actions.filter(function (item) {
     return item && item.title && item.url;
   }) : [];
-  var isGalaxy = background === 'galaxy';
-  var isImageBackground = background && !isGalaxy;
+  var isGalaxy = animation.type === 'galaxy';
+  var isImageBackground = background.length > 0;
+  var galaxyParams = animation.params && typeof animation.params === 'object' && !Array.isArray(animation.params) ? animation.params : {};
+  var galaxyParamsJson = escape_html(JSON.stringify(galaxyParams));
   var projectName = proj.name || proj.title || page.wiki;
   var adaptiveTextAttr = '';
   if (isImageBackground) {
     adaptiveTextAttr = ' data-text-adaptive="split" style="--cover-url:url(\'' + escape_html(background.replace(/'/g, '%27')) + '\')"';
   } else if (isGalaxy) {
-    adaptiveTextAttr = ' data-text-adaptive="split" style="--adaptive-background:#10152f"';
+    adaptiveTextAttr = ' data-text-adaptive="split" style="--adaptive-background:#000000"';
   }
 
   el += '<div class="l_cover wiki wiki-hero' + (hasPreview ? '' : ' without-preview') + '">';
   el += '<div class="wiki-cover-background' + (isGalaxy ? ' galaxy' : '') + (isImageBackground ? ' image' : '') + '" aria-hidden="true">';
-  if (isGalaxy) {
-    el += '<canvas></canvas>';
-  } else if (isImageBackground) {
+  if (isImageBackground) {
     el += '<img class="wiki-cover-background-image" src="' + escape_html(background) + '" alt="" />';
     el += '<img class="wiki-cover-background-blur" src="' + escape_html(background) + '" alt="" />';
   }
+  if (isGalaxy) {
+    el += '<canvas data-galaxy-params="' + galaxyParamsJson + '"></canvas>';
+  }
   el += '<div class="wiki-cover-background-overlay"></div></div>';
   el += '<div class="wiki-cover-layout"' + adaptiveTextAttr + '>';
-  el += '<nav class="wiki-navbar" aria-label="' + escape_html(__('meta.wiki_project')) + '"><span class="wiki-cover-project-brand"><span class="wiki-cover-project-logo">';
-  if (proj.icon) {
-    el += '<img src="' + escape_html(proj.icon) + '" alt="" />';
-  } else {
-    el += icon('default:documents');
-  }
-  el += '</span><span class="wiki-cover-project-name">' + escape_html(projectName) + '</span></span></nav>';
+  el += '<nav class="wiki-navbar" aria-label="' + escape_html(config.title) + '">';
+  el += '<a class="wiki-navbar-home" href="' + escape_html(pretty_url('/')) + '">' + escape_html(config.title) + '</a>';
+  el += '</nav>';
   el += '<article class="cover-wrap wiki-cover-content">';
   el += '<section class="wiki-cover-intro">';
   if (repo) {
-    el += '<p class="wiki-cover-release ds-ghinfo is-loading" data-project-name="' + escape_html(projectName) + '" data-api="https://' + theme.api_host.ghapi + '/repos/' + escape_html(repo) + '/tags" index="0">';
-    el += '<span class="wiki-cover-release-placeholder">' + escape_html(__('message.fetching_latest_release', projectName)) + '</span>';
-    el += '<span class="wiki-cover-release-value"><span type="text" id="latest-tag-name"></span></span></p>';
+    el += '<a class="wiki-cover-release ds-ghinfo is-loading" data-project-name="' + escape_html(projectName) + '" data-repo="' + escape_html(repo) + '" data-api="https://' + theme.api_host.ghapi + '/repos/' + escape_html(repo) + '/tags" index="0" target="_blank" rel="external nofollow noopener noreferrer">';
+    el += '<span class="wiki-cover-release-value"><span type="text" id="latest-tag-name"></span></span></a>';
   }
   if (title) {
-    el += '<h1 class="cover-title">' + escape_html(title) + '</h1>';
+    el += '<h1 class="cover-title" data-text-adaptive="contrast">' + escape_html(title) + '</h1>';
   }
   if (desc) {
     el += '<div class="description">' + desc + '</div>';
   }
   el += '<div class="wiki-cover-actions">';
   if (repo) {
-    el += '<a class="button wiki-cover-source" href="https://github.com/' + escape_html(repo) + '" target="_blank" rel="external nofollow noopener noreferrer">' + icon('default:github') + '<span>' + escape_html(__('btn.source')) + '</span></a>';
+    el += '<a class="button wiki-cover-source card-hover card-hover--spotlight" href="https://github.com/' + escape_html(repo) + '" target="_blank" rel="external nofollow noopener noreferrer">' + icon('default:github') + '<span>' + escape_html(__('btn.source')) + '</span></a>';
   }
-  el += '<a class="button" href="#start">' + icon('default:documents') + '<span>' + escape_html(__('btn.docs')) + '</span></a>';
+  el += '<a class="button card-hover card-hover--spotlight" href="#start">' + icon('default:documents') + '<span>' + escape_html(__('btn.docs')) + '</span></a>';
   actions.forEach(function (item) {
-    el += '<a class="button" href="' + escape_html(item.url) + '" target="_blank" rel="external nofollow noopener noreferrer">';
+    el += '<a class="button card-hover card-hover--spotlight" href="' + escape_html(item.url) + '" target="_blank" rel="external nofollow noopener noreferrer">';
     if (item.icon) {
       el += icon(item.icon);
     }
@@ -90,7 +89,7 @@ function layoutWikiCover() {
     }
     el += '</section>';
   }
-  el += '</article></div></div><hr>';
+  el += '</article></div></div>';
   return el;
 }
 

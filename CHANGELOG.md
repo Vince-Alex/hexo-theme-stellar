@@ -1,5 +1,65 @@
 # Changelog
 
+## 1.44.0
+
+> 发布日期：2026-08-21
+
+### 新功能
+- 新增可选的卡片 Spotlight 光斑与 3D Tilt 倾斜效果，可通过 `plugins.card_hover` 配置启用、光斑颜色和最大倾斜角度，并按组件独立接入与降级
+- Wiki Hero 操作按钮接入 Spotlight 光效，背景图片与动画改为独立配置，Galaxy 支持逐实例参数覆盖、图片叠加和 WebGL 失败降级
+- 桌面端新增 `Command+K` / `Ctrl+K` 聚焦搜索框快捷键，在窄屏、编辑区域和输入法组合状态下保留原生行为
+
+### 样式与重构
+- 搜索控件改用原生搜索输入框、搜索地标和标签关联，完善无障碍语义；本地搜索与 Algolia 结果统一可点击区域、表面样式和 Spotlight 生命周期
+- 笔记标签行复用文章标签胶囊的 hashtag 图标、间距与交互样式
+
+### 升级注意（配置变更与破坏性改动）
+- Wiki Hero 的 Galaxy 配置由 `background: galaxy` 迁移为 `animation.type: galaxy`，参数放在 `animation.params`；`background` 现在仅用于背景图片，并可与动画同时显示
+- `plugins.card_hover.enable` 默认为 `false`，升级后不会自动启用卡片动态效果
+
+Full Changelog: [1.43.1...1.44.0](https://github.com/xaoxuu/hexo-theme-stellar/compare/1.43.1...1.44.0)
+
+## 1.43.1
+
+> 发布日期：2026-08-20
+
+### 修复
+- 左栏 Footer Social 的外部图片图标统一为 24×24px，非方形图片保持原始比例，避免固有尺寸撑宽按钮或被裁切
+- 发版脚本自动同步主题配置、包信息与安装知识库的版本号，并在最终待提交状态执行完整质量检查
+
+Full Changelog: [1.43.0...1.43.1](https://github.com/xaoxuu/hexo-theme-stellar/compare/1.43.0...1.43.1)
+
+## 1.43.0
+
+> 发布日期：2026-08-20
+
+### 新功能
+- Wiki 项目首页升级为完整 Hero：新增项目元信息、安装命令切换与复制、最新版本异步加载，并加入支持减弱动态效果的 WebGL 星河背景
+- Wiki 项目卡片重构为项目预览布局，补充适用范围、版本与仓库信息展示
+- Footer 新增通用下拉菜单、弹性占位项和自适应 social 布局；同时新增可复用的 `{% dropdown %}` 标签
+- 同源整页导航默认启用原生 View Transition，旧浏览器自动回退普通导航
+- 专栏列表按项目日期排序，文章列表超过阈值时以归档式折叠列表展示，可展开或收起其余文章
+
+### 修复
+- Mermaid 的 `style_optimization` 开关恢复正确语义，关闭时使用 Mermaid 官方主题，开启时应用 Stellar 优化样式，并修复图中文字不可见（#693）
+- `{% sites %}` 网站卡片缺少图标时复用 siteinfo 服务自动补全，请求失败时保留默认图标（#387）
+- navbar 在无轮播区页面顶部保持卡片样式，实际滚动 2px 后再切换为玻璃效果
+- 修复 linklist 激活圆点被标题样式覆盖，以及文章分享图标尺寸不一致的问题
+
+### 样式与重构
+- 侧栏菜单、目录树、相关内容、Widget 与下拉菜单统一复用 collection 组件，收敛结构、密度、背景、暗色高亮和交互反馈
+- Wiki Hero 调整版本标签布局、星河辉光与鼠标排斥效果
+- 移动端根字号自动增加 2px，并统一正文、标题、列表与标签插件的响应式排版
+- 评论区与异步数据服务统一使用自包含的三圆点 loading 动画，移除外部 loading 图标依赖
+
+### 升级注意（配置变更与破坏性改动）
+- 新增 `style.page_transition.enable`，默认 `true`；不需要原生跨文档过渡时可设为 `false`
+- 移除 `style.font-size.body`，正文与组件字号统一从 `style.font-size.root` 派生；移动端根字号会在配置值基础上增加 2px
+- 移除 `default.loading` 配置，loading 动画改为主题内置 SVG
+- `footer.social` 支持 `type: dropdown`、`items` 与 `spacer`；旧的普通链接配置继续兼容
+
+Full Changelog: [1.42.1...1.43.0](https://github.com/xaoxuu/hexo-theme-stellar/compare/1.42.1...1.43.0)
+
 ## 1.42.1
 
 > 发布日期：2026-08-17
